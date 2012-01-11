@@ -41,5 +41,8 @@ Email your questions to `evanmattson` *at* `gmail` *dot* `com`
 
 == Changelog ==
 
-= 1.0 =
+= 0.1 =
 * Initial release
+
+= 0.2 =
+* Fixed date formatting in the admin tables.
