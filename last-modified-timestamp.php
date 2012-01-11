@@ -2,7 +2,7 @@
 /*
 Plugin Name: Last Modified Timestamp
 Description: This plugin will add information to the admin interface about when each post/page was last modified. No options currently available, simply activate and enjoy!
-Version: trunk
+Version: 0.1
 Author: Evan Mattson
 */
 
