@@ -41,6 +41,9 @@ Email your questions to `evanmattson` *at* `gmail` *dot* `com`
 
 == Changelog ==
 
+= 0.3.1 =
+* Fixed sortable column on pages table.
+
 = 0.3 =
 * The `Last Modified` column in the admin post/page tables is now sortable!
 * CSS - widened `Last Modified` column to account for extra width needed for sortable arrow.

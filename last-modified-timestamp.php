@@ -35,6 +35,7 @@ function last_modified_add() {
 	add_action( 'manage_posts_custom_column','last_modified_column_content', 10, 2 );
 	
 	add_filter( 'manage_edit-post_sortable_columns', 'last_modified_column_register_sortable' );
+	add_filter( 'manage_edit-page_sortable_columns', 'last_modified_column_register_sortable' );
 }
 add_action( 'admin_init', 'last_modified_add' );
 
