@@ -44,7 +44,8 @@ Email your questions to `evanmattson` *at* `gmail` *dot* `com`
 = 0.3 =
 * The `Last Modified` column in the admin post/page tables is now sortable!
 * CSS - widened `Last Modified` column to account for extra width needed for sortable arrow.
-* Corrected a typo in the admin messages for pages
+* Updated screenshot of `Last Modified` column in the admin post/page tables.
+* Corrected a typo in the admin messages for pages.
 
 = 0.2 =
 * Fixed date formatting in the admin tables.
