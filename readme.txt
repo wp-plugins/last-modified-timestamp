@@ -3,7 +3,7 @@ Contributors: aaemnnosttv
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LRA4JZYALHX82
 Tags: page modified, post modified, timestamp, last modified
 Requires at least: 3.0.0
-Tested up to: 3.1.1
+Tested up to: 3.3.1
 Stable tag: 0.2
 
 Adds the post_modified timestamp to the admin interface. No options currently available, simply activate and enjoy!
@@ -41,8 +41,13 @@ Email your questions to `evanmattson` *at* `gmail` *dot* `com`
 
 == Changelog ==
 
-= 0.1 =
-* Initial release
+= 0.3 =
+* The `Last Modified` column in the admin post/page tables is now sortable!
+* CSS - widened `Last Modified` column to account for extra width needed for sortable arrow.
+* Corrected a typo in the admin messages for pages
 
 = 0.2 =
 * Fixed date formatting in the admin tables.
+
+= 0.1 =
+* Initial release

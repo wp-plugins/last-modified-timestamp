@@ -2,7 +2,7 @@
 /*
 Plugin Name: Last Modified Timestamp
 Description: This plugin will add information to the admin interface about when each post/page was last modified. No options currently available, simply activate and enjoy!
-Version: 0.2
+Version: 0.3
 Author: Evan Mattson
 */
 
@@ -33,6 +33,8 @@ function last_modified_add() {
 	add_filter( 'manage_post_posts_columns','last_modified_column_heading' );
 	add_action( 'manage_pages_custom_column','last_modified_column_content', 10, 2 );
 	add_action( 'manage_posts_custom_column','last_modified_column_content', 10, 2 );
+	
+	add_filter( 'manage_edit-post_sortable_columns', 'last_modified_column_register_sortable' );
 }
 add_action( 'admin_init', 'last_modified_add' );
 
@@ -57,8 +59,8 @@ function modify_messages($messages) {
 		 4 => sprintf( __('Post updated. <strong>%2$s</strong>. <a href="%1$s">View post</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
 		);
 	$messages['page'] = array(
-		 1 => sprintf( __('Page updated. <strong>%2$s</strong>. <a href="%1$s">View post</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
-		 4 => sprintf( __('Page updated. <strong>%2$s</strong>. <a href="%1$s">View post</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
+		 1 => sprintf( __('Page updated. <strong>%2$s</strong>. <a href="%1$s">View page</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
+		 4 => sprintf( __('Page updated. <strong>%2$s</strong>. <a href="%1$s">View page</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
 		);
 	return $messages;
 }
@@ -82,11 +84,18 @@ function last_modified_column_content($column_name, $id) {
 		echo construct_timestamp('wp-table');
 }
 
+// Register the column as sortable
+function last_modified_column_register_sortable( $columns ) {
+	$columns['last-modified'] = 'modified';
+ 	return $columns;
+}
+
+
 // Output CSS for width of new column 
 function print_last_modified_css() {
 ?>
 <style type="text/css">
-	#last-modified { width: 110px; }
+	#last-modified { width: 120px; }
 </style>
 <?php  
 }
