@@ -2,7 +2,7 @@
 /*
 Plugin Name: Last Modified Timestamp
 Description: This plugin will add information to the admin interface about when each post/page was last modified. No options currently available, simply activate and enjoy!
-Version: 0.3.1
+Version: 0.4
 Author: Evan Mattson
 */
 
@@ -40,35 +40,63 @@ function last_modified_add() {
 add_action( 'admin_init', 'last_modified_add' );
 
 // returns a formatted timestamp as a string
-function construct_timestamp($mode='') { 
-// instead of IF to better handle other possible modes in future
-	switch ($mode) { 
-		case 'wp-table' :
-			$modified_timestamp = get_the_modified_date('Y/m/d') . '<br />' . get_the_modified_time();  // wp-tables
-			break;
-		default :
-			$modified_timestamp = get_the_modified_date('M j, Y') . ' @ ' . get_the_modified_time(); //  post messages & meta box
-	}
+function construct_timestamp($context='') {
+	
+	$defaults = array(
+		'wp-table'    => array(
+			'df'  => 'Y/m/d',
+			'tf'  => '',
+			'sep' => '<br />'),
+		'messages'    => array(
+			'df'  => 'M j, Y',
+			'tf'  => '',
+			'sep' => ' @ '),
+		'publish-box' => array(
+			'df'  => 'M j, Y',
+			'tf'  => '',
+			'sep' => ' @ '),
+	);
+
+	$format = apply_filters( 'last_modified_timestamp_defaults', $defaults );
+
+	$modified_timestamp = get_the_modified_date( $format[$context]['df'] ) . $format[$context]['sep'] . get_the_modified_time( $format[$context]['tf'] );
+
+	$modified_timestamp = '<span class="last-modified-timestamp">' . $modified_timestamp . '</span>';
+
 return $modified_timestamp;
 }
 
 // filters the admin messages at the top of the page on post.php for pages & posts to include the last modified timestamp.
 function modify_messages($messages) {
-	$modified_timestamp = construct_timestamp();
-	$messages['post'] = array(
-		 1 => sprintf( __('Post updated. <strong>%2$s</strong>. <a href="%1$s">View post</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
-		 4 => sprintf( __('Post updated. <strong>%2$s</strong>. <a href="%1$s">View post</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
-		);
-	$messages['page'] = array(
-		 1 => sprintf( __('Page updated. <strong>%2$s</strong>. <a href="%1$s">View page</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
-		 4 => sprintf( __('Page updated. <strong>%2$s</strong>. <a href="%1$s">View page</a>'), esc_url( get_permalink($post_ID) ), $modified_timestamp ),
-		);
+
+	$modified_timestamp = construct_timestamp('messages');
+	
+	// define a pattern to only match appropriate messages
+	$match = array('updated','published','saved','submitted','restored');
+	// internationalize match terms
+	$match = array_map('__', $match);
+
+	$pattern = '/' . implode('|', $match) . '/';
+	
+	foreach ($messages as $key => &$array) {
+		foreach ($array as $inner_key => &$value) {
+			if (! empty($value) && preg_match($pattern , $value) ) {
+				if (0 != $entry_point = strpos($value, '.') ) {
+					$first_half = substr($value, 0, $entry_point+1 );
+					$second_half = substr($value, strlen($first_half));
+					$value = $first_half . ' ' . $modified_timestamp . '. ' . $second_half;	
+				} else {
+					$value = $modified_timestamp . ': ' . $value;
+				}
+			}
+		}
+	}
 	return $messages;
 }
 
 // Add the Last Modified timestamp to the 'Publish' meta box in post.php
 function add_modified_to_meta() {
-	$modified_timestamp = sprintf( __('Last modified on: <strong>%1$s</strong>'), construct_timestamp() );
+	$modified_timestamp = vsprintf( __('Last modified on: <strong>%1$s</strong>'), construct_timestamp('publish-box') );
 	echo '<div class="misc-pub-section misc-pub-section-last">' . $modified_timestamp . '</div>';
 }
 
@@ -94,10 +122,8 @@ function last_modified_column_register_sortable( $columns ) {
 
 // Output CSS for width of new column 
 function print_last_modified_css() {
-?>
-<style type="text/css">
-	#last-modified { width: 120px; }
-</style>
-<?php  
+
+	echo '<style type="text/css">#last-modified{width:120px;}#message .last-modified-timestamp{font-weight:bold;}</style>'."\n";
+
 }
 ?>

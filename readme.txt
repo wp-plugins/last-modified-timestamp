@@ -3,7 +3,7 @@ Contributors: aaemnnosttv
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LRA4JZYALHX82
 Tags: page modified, post modified, timestamp, last modified
 Requires at least: 3.0.0
-Tested up to: 3.3.1
+Tested up to: 3.3.2
 Stable tag: 0.3.1
 
 Adds the post_modified timestamp to the admin interface. No options currently available, simply activate and enjoy!
@@ -40,6 +40,10 @@ Email your questions to `evanmattson` *at* `gmail` *dot* `com`
 1. Admin messages after editing a page/post - ie: `Post updated. *timestamp* View Post`
 
 == Changelog ==
+
+= 0.4 =
+* Added support for other types of update messages.
+* Added filter to allow output to be customized.
 
 = 0.3.1 =
 * Fixed sortable column on pages table.
