@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: page modified, post modified, timestamp, last modified
 Requires at least: 3.0.0
 Tested up to: 3.3.2
-Stable tag: 0.3.1
+Stable tag: 0.4
 
 Adds the post_modified timestamp to the admin interface. No options currently available, simply activate and enjoy!
 
